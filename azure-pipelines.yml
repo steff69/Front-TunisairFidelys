@@ -8,7 +8,17 @@ pool:
  
 
 steps:
-
+- script: |
+    # Ensure Flutter is correctly set up
+    flutter --version
+    # Check outdated packages
+    flutter pub outdated
+    # Upgrade packages
+    flutter pub upgrade
+    # Get dependencies
+    flutter pub get
+  displayName: 'Run Flutter Commands'
+  
 - task: FlutterBuild@0
   inputs:
     target: 'apk'
