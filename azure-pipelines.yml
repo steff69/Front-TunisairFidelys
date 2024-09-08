@@ -16,3 +16,8 @@ steps:
     target: 'apk'
     projectDirectory: './'
     flutterDirectory: '/home/azureuser/myagent/sdk/flutter/bin'
+
+
+- task: FlutterTest@0
+  inputs:
+    projectDirectory: './'
