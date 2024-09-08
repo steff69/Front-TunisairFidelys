@@ -9,7 +9,7 @@ pool:
 steps:
 - script: 
       pwd
-      
+      flutter --version
 - script: |
     
     flutter --version
@@ -27,7 +27,9 @@ steps:
     projectDirectory: './'
     flutterDirectory: '/home/azureuser/myagent/sdk/flutter/bin'
 
-
+- script: |
+    ls -la ./    # List the contents of the directory to verify correct path
+  displayName: 'List Directory Contents'
 - task: FlutterTest@0
   inputs:
     projectDirectory: './'
