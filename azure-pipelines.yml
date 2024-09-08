@@ -2,9 +2,9 @@ trigger:
 - none
 
 pool:
-  name: Poolmyagents
+  name: bara
   demands:
-    - agent.name -equals agentm
+    - agent.name -equals vmagentm
  
 
 steps:
