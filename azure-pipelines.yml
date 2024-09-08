@@ -7,7 +7,9 @@ pool:
     - agent.name -equals vmagentm
 
 steps:
-
+- script: 
+      pwd
+      
 
 - task: FlutterBuild@0
   inputs:
