@@ -8,6 +8,9 @@ pool:
 
 steps:
 - script: |
+    # Set ANDROID_HOME environment variable
+    export ANDROID_HOME=/home/azureuser/myagent/sdk
+    export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin
     # Ensure Flutter is correctly set up
     /home/azureuser/myagent/sdk/flutter/bin/flutter --version
     # Check outdated packages
