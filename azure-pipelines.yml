@@ -1,0 +1,16 @@
+trigger:
+- none
+
+pool:
+  name: newagentpool
+  demands:
+    - agent.name -equals nchallahagent
+ 
+
+steps:
+
+- task: FlutterBuild@0
+  inputs:
+    target: 'apk'
+    projectDirectory: './'
+    flutterDirectory: '/home/azureuser/myagent/sdk/flutter/bin'
