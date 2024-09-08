@@ -1,5 +1,5 @@
 trigger:
-- none
+  - none
 
 pool:
   name: bara
@@ -8,28 +8,21 @@ pool:
 
 steps:
 - script: 
-      pwd
-      flutter --version
-- script: |
+    pwd
     
+- script: |
     flutter --version
-  
     flutter pub outdated
-
     flutter pub upgrade --major-versions
-
     flutter pub get
-  displayName: 'Run Flutter Commands'      
+  displayName: 'Run Flutter Commands'
 
 - task: FlutterBuild@0
   inputs:
     target: 'apk'
-    projectDirectory: './'
+    projectDirectory: './'  # Ensure this points to your project
     flutterDirectory: '/home/azureuser/myagent/sdk/flutter/bin'
 
-- script: |
-    ls -la ./    # List the contents of the directory to verify correct path
-  displayName: 'List Directory Contents'
 - task: FlutterTest@0
   inputs:
-    projectDirectory: './'
+    projectDirectory: './'   # Ensure this points to your Flutter project
