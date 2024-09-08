@@ -5,22 +5,21 @@ pool:
   name: bara
   demands:
     - agent.name -equals vmagentm
- 
 
 steps:
 - script: |
     # Ensure Flutter is correctly set up
-    flutter --version
+    /home/azureuser/myagent/sdk/flutter/bin/flutter --version
     # Check outdated packages
-    flutter pub outdated
+    /home/azureuser/myagent/sdk/flutter/bin/flutter pub outdated
     # Upgrade packages
-    flutter pub upgrade
+    /home/azureuser/myagent/sdk/flutter/bin/flutter pub upgrade
     # Get dependencies
-    flutter pub get
+    /home/azureuser/myagent/sdk/flutter/bin/flutter pub get
   displayName: 'Run Flutter Commands'
-  
+
 - task: FlutterBuild@0
   inputs:
     target: 'apk'
     projectDirectory: './'
-    flutterDirectory: '/myagent/sdk/flutter/bin'
+    flutterDirectory: '/home/azureuser/myagent/sdk/flutter/bin'
