@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travel_app/main.dart';
-import 'package:travel_app/pages/welcome_page.dart';  // Adjust based on what you're testing
+import 'package:tunisair-master/main.dart';
+import 'package:tunisair-master/pages/welcome_page.dart';  // Adjust based on what you're testing
 
 void main() {
   testWidgets('Welcome page loads correctly', (WidgetTester tester) async {
