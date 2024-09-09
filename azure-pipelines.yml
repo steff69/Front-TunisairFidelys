@@ -22,7 +22,9 @@ steps:
     target: 'apk'
     projectDirectory: './'  # Ensure this points to your project
     flutterDirectory: '/home/azureuser/myagent/sdk/flutter/bin'
-
+    
+- script: 
+    pwd
 - task: FlutterTest@0
   inputs:
     projectDirectory: './'
