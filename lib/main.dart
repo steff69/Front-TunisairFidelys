@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tunisair-master/GetServices/testservicese.dart';
-import 'package:tunisair-master/Register/register.dart';
-import 'package:tunisair-master/constants/constants.dart';
-import 'package:tunisair-master/pages/MainScreen.dart';
-import 'package:tunisair-master/pages/home_page.dart';
+import 'package:travel_app/GetServices/testservicese.dart';
+import 'package:travel_app/Register/register.dart';
+import 'package:travel_app/constants/constants.dart';
+import 'package:travel_app/pages/MainScreen.dart';
+import 'package:travel_app/pages/home_page.dart';
 
-import 'package:tunisair-master/pages/welcome_page.dart.dart';
+import 'package:travel_app/pages/welcome_page.dart.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
