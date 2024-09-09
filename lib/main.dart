@@ -7,7 +7,7 @@ import 'package:travel_app/constants/constants.dart';
 import 'package:travel_app/pages/MainScreen.dart';
 import 'package:travel_app/pages/home_page.dart';
 
-import 'package:travel_app/pages/welcome_page.dart.dart';
+import 'package:travel_app/pages/welcome_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
