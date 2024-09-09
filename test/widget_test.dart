@@ -1,29 +1,25 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:travel_app/main.dart';
+import 'package:travel_app/main.dart'; // Ensure this is correct
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('WelcomePage loads correctly', (WidgetTester tester) async {
+    // Build the WelcomePage app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the text "Explore your journey" is found on the WelcomePage.
+    expect(find.text('Explore your journey \nonly with us'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Verify that the text "All your vacations destinations are here" is found.
+    expect(find.text('All your vacations destinations are here,\nenjoy your holiday'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the "Get Started" button is present.
+    expect(find.text('Get Started'), findsOneWidget);
+
+    // Tap the "Get Started" button and trigger navigation.
+    await tester.tap(find.text('Get Started'));
+    await tester.pumpAndSettle(); // Wait for the navigation animation to finish.
+
+    // Verify that after tapping "Get Started", the LoginPage is shown.
+    expect(find.byType(LoginPage), findsOneWidget);
   });
 }
