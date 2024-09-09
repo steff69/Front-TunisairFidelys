@@ -25,4 +25,4 @@ steps:
 
 - task: FlutterTest@0
   inputs:
-    projectDirectory: './'   # Ensure this points to your Flutter project
+    projectDirectory: './'
