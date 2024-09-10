@@ -25,6 +25,8 @@ steps:
     
 - script: 
     pwd
-- task: FlutterTest@0
-  inputs:
-    projectDirectory: './'
+    
+- script: |
+      flutter pub get
+      flutter test
+  displayName: 'Install dependencies and run tests'
