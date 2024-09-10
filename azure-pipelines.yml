@@ -27,11 +27,10 @@ steps:
     pwd
     
 - script: |
-      flutter pub get
       flutter test
-  displayName: 'Install dependencies and run tests'
+  displayName: 'integration and junit test'
 
 - task: PublishTestResults@2
   inputs:
-      testResultsFiles: './test-results.xml'
+      testResultsFiles: '/test/test-results.xml'
       testResultsFormat: 'JUnit'
