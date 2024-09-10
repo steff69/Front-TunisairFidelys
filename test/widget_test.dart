@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:travel_app/main.dart'; // Ensure this is correct
+import 'package:travel_app/login/login.dart';
 
 void main() {
   testWidgets('WelcomePage loads correctly', (WidgetTester tester) async {
