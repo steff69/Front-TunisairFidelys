@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:travel_app/controller/RegisterController.dart';
-import 'package:travel_app/screens/RegisterPage.dart';
+import 'package:travel_app/Register/Register.dart';
 
 void main() {
   testWidgets('Register Page UI Test', (WidgetTester tester) async {
