@@ -27,7 +27,7 @@ steps:
     pwd
     
 - script: |
-      flutter test test/widget_testdart
+      flutter test test/widget_test.dart
   displayName: 'test integration and '
 
 - script: |
