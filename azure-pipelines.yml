@@ -27,8 +27,13 @@ steps:
     pwd
     
 - script: |
-      flutter test
-  displayName: 'integration and junit test'
+      flutter test test/widget_testdart
+  displayName: 'test integration and '
+
+- script: |
+      flutter test test/register_controller_test.dart
+      flutter test test/register_page_test.dart
+  displayName: ' test junit test'
 
 - task: PublishTestResults@2
   inputs:
