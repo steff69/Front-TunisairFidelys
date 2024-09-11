@@ -14,40 +14,35 @@ import 'package:travel_app/constants/constants.dart';
 import 'package:travel_app/login/login.dart';
 
 class RegisterController extends GetxController {
-  //RxList<DatumC> dataList = RxList<DatumC>();
-  final box = GetStorage();
-
   RxBool loading = false.obs;
 
-  void registerFunction(String data) async {
+  Future<void> registerFunction(String data) async {  // Change void to Future<void>
     loading.value = true;
 
     final url = Uri.parse('http://10.0.2.2:5000/api/user/create');
     Map<String, String> headers = {'content-Type': 'application/json'};
 
     try {
-      final response = await http.post(url, headers: headers, body: data);
+      final response = await http.post(url, headers: headers, body: data);  // Ensure this is awaited
 
-      //print(jsonDecode(response.body)['data']);
       if (response.statusCode == 200) {
         String text = jsonDecode(response.body)["message"];
 
-        Get.snackbar('  crated ssucs', "$text",
+        Get.snackbar('Created successfully', "$text",
             backgroundColor: kPrimary,
             colorText: kLightwhite,
             icon: Icon(Ionicons.fast_food_outline));
 
-        Timer.periodic(Duration(seconds: 3), (timer) {
+        Timer(Duration(seconds: 3), () {
           loading.value = false;
         });
 
         Get.offAll(() => LoginPage(),
             transition: Transition.fade, duration: Duration(milliseconds: 900));
-      }
-      if (response.statusCode == 400) {
+      } else if (response.statusCode == 400) {
         String text = jsonDecode(response.body)["message"];
 
-        Get.snackbar('  you have something wrong', "$text",
+        Get.snackbar('Error', "$text",
             messageText: Text(
               "$text",
               style: TextStyle(fontSize: 18, color: kLightwhite),
@@ -56,12 +51,14 @@ class RegisterController extends GetxController {
             backgroundColor: kRed,
             icon: Icon(Ionicons.fast_food_outline));
 
-        Timer.periodic(Duration(seconds: 3), (timer) {
+        Timer(Duration(seconds: 3), () {
           loading.value = false;
         });
       }
     } catch (e) {
       print(e);
-    } finally {}
+      loading.value = false;
+    }
   }
 }
+

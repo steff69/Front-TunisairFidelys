@@ -5,20 +5,17 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:travel_app/controller/RegisterController.dart';
-import 'package:travel_app/constants/constants.dart';
-
-// Import the generated mock class
 import 'register_controller_test.mocks.dart';
 
-// Annotation to generate the mock class
+// This annotation generates the mock class for http.Client
 @GenerateMocks([http.Client])
 void main() {
   late RegisterController controller;
-  late MockClient mockClient; // Use MockClient from the generated file
+  late MockClient mockClient;
 
   setUp(() {
     controller = Get.put(RegisterController());
-    mockClient = MockClient(); // Use the generated MockClient
+    mockClient = MockClient();
   });
 
   tearDown(() {
@@ -44,9 +41,9 @@ void main() {
       "username": "testuser"
     });
 
-    await controller.registerFunction(data);
+    await controller.registerFunction(data);  // Await is now valid
 
-    // Assert: Ensure the loading state is set correctly
+    // Assert: loading state was set to true at the start and false at the end
     expect(controller.loading.value, false);
   });
 
@@ -62,16 +59,16 @@ void main() {
       body: anyNamed('body'),
     )).thenAnswer((_) async => http.Response(jsonEncode(mockErrorResponse), 400));
 
-    // Act: Call the functiond
+    // Act: Call the function
     String data = jsonEncode({
       "email": "invalid@example.com",
       "password": "password123",
       "username": "invaliduser"
     });
 
-    await controller.registerFunction(data);
+    await controller.registerFunction(data);  // Await is now valid
 
-    // Assert: Ensure the loading state is set correctly after an error
+    // Assert: loading state should be false after the error
     expect(controller.loading.value, false);
   });
 }
