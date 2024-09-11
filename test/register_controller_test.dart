@@ -7,18 +7,18 @@ import 'package:mockito/mockito.dart';
 import 'package:travel_app/controller/RegisterController.dart';
 import 'package:travel_app/constants/constants.dart';
 
-// Generate a mock class for the http.Client
+// Import the generated mock class
 import 'register_controller_test.mocks.dart';
 
-// This annotation is needed to generate the mock class using Mockito.
+// Annotation to generate the mock class
 @GenerateMocks([http.Client])
 void main() {
   late RegisterController controller;
-  late MockClient mockClient;
+  late MockClient mockClient; // Use MockClient from the generated file
 
   setUp(() {
     controller = Get.put(RegisterController());
-    mockClient = MockClient();
+    mockClient = MockClient(); // Use the generated MockClient
   });
 
   tearDown(() {
@@ -46,11 +46,8 @@ void main() {
 
     await controller.registerFunction(data);
 
-    // Assert: loading state was set to true at the start and false at the end
+    // Assert: Ensure the loading state is set correctly
     expect(controller.loading.value, false);
-
-    // Additionally, you can assert if the API response was handled correctly, but
-    // since we can't directly check Get.snackbar(), we can focus on loading state here.
   });
 
   test('registerFunction handles error response correctly', () async {
@@ -74,10 +71,7 @@ void main() {
 
     await controller.registerFunction(data);
 
-    // Assert: loading state should be false after the error
+    // Assert: Ensure the loading state is set correctly after an error
     expect(controller.loading.value, false);
-
-    // Since error message display and navigation are triggered by Get methods,
-    // you would focus on verifying state and flow for this case.
   });
 }
