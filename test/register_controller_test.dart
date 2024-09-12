@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:travel_app/controller/RegisterController.dart';
-import 'register_controller_test.mocks.dart';
+import 'register_controller_test.mocks.dart';  // Ensure this is generated properly
 
 // This annotation generates the mock class for http.Client
 @GenerateMocks([http.Client])
@@ -14,12 +14,13 @@ void main() {
   late MockClient mockClient;
 
   setUp(() {
+    Get.testMode = true;  // This prevents GetX navigation issues during testing
     mockClient = MockClient();  // Create the mock client
     controller = Get.put(RegisterController(client: mockClient));  // Inject the mock client
   });
 
   tearDown(() {
-    Get.delete<RegisterController>();
+    Get.delete<RegisterController>();  // Clean up the controller
   });
 
   test('registerFunction sets loading state correctly and returns success response', () async {
@@ -41,10 +42,15 @@ void main() {
       "username": "testuser"
     });
 
-    await controller.registerFunction(data);
+    // Assert that the loading is set to true during the request
+    final future = controller.registerFunction(data);
+    expect(controller.loading.value, true);
 
-    // Assert: loading state was set to true at the start and false at the end
+    await future;  // Await the actual call
+
+    // Assert: loading state was set to false at the end and check other side effects
     expect(controller.loading.value, false);
+    verify(mockClient.post(any, headers: anyNamed('headers'), body: anyNamed('body'))).called(1);
   });
 
   test('registerFunction handles error response correctly', () async {
@@ -66,9 +72,14 @@ void main() {
       "username": "invaliduser"
     });
 
-    await controller.registerFunction(data);
+    // Assert that loading is set to true at the start
+    final future = controller.registerFunction(data);
+    expect(controller.loading.value, true);
+
+    await future;  // Await the actual call
 
     // Assert: loading state should be false after the error
     expect(controller.loading.value, false);
+    verify(mockClient.post(any, headers: anyNamed('headers'), body: anyNamed('body'))).called(1);
   });
 }
