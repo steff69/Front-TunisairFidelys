@@ -14,16 +14,21 @@ import 'package:travel_app/constants/constants.dart';
 import 'package:travel_app/login/login.dart';
 
 class RegisterController extends GetxController {
+  final http.Client client;  // Inject the HTTP client
+
+  // Modify the constructor to accept a client
+  RegisterController({required this.client});
+
   RxBool loading = false.obs;
 
-  Future<void> registerFunction(String data) async {  // Change void to Future<void>
+  Future<void> registerFunction(String data) async {
     loading.value = true;
 
     final url = Uri.parse('http://10.0.2.2:5000/api/user/create');
     Map<String, String> headers = {'content-Type': 'application/json'};
 
     try {
-      final response = await http.post(url, headers: headers, body: data);  // Ensure this is awaited
+      final response = await client.post(url, headers: headers, body: data);  // Use injected client
 
       if (response.statusCode == 200) {
         String text = jsonDecode(response.body)["message"];

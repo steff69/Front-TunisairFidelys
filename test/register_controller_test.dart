@@ -14,8 +14,8 @@ void main() {
   late MockClient mockClient;
 
   setUp(() {
-    controller = Get.put(RegisterController());
-    mockClient = MockClient();
+    mockClient = MockClient();  // Create the mock client
+    controller = Get.put(RegisterController(client: mockClient));  // Inject the mock client
   });
 
   tearDown(() {
@@ -41,7 +41,7 @@ void main() {
       "username": "testuser"
     });
 
-    await controller.registerFunction(data);  // Await is now valid
+    await controller.registerFunction(data);
 
     // Assert: loading state was set to true at the start and false at the end
     expect(controller.loading.value, false);
@@ -66,7 +66,7 @@ void main() {
       "username": "invaliduser"
     });
 
-    await controller.registerFunction(data);  // Await is now valid
+    await controller.registerFunction(data);
 
     // Assert: loading state should be false after the error
     expect(controller.loading.value, false);
