@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
 import 'package:travel_app/controller/RegisterController.dart';
 import 'package:travel_app/register/register.dart';  // Ensure correct path
-import 'package:travel_app/common/password_text_field.dart';  // Import PasswordTextField
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';  // Import this for TextFormField
 
 class MockClient extends Mock implements http.Client {}
 
@@ -28,8 +28,8 @@ void main() {
       ),
     );
 
-    // Check if the password field is present and enter text into it
-    await tester.enterText(find.byType(PasswordTextField), 'password123');
+    // Replaced PasswordTextField with TextFormField
+    await tester.enterText(find.byType(TextFormField), 'password123');
     expect(find.text('password123'), findsOneWidget);
   });
 }
