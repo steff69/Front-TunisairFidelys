@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:travel_app/common/EmailTextField.dart';
+import 'package:travel_app/common/PasswordTextField.dart';
 import 'package:travel_app/controller/RegisterController.dart';
 import 'package:travel_app/Register/register.dart';
 import 'register_page_test.mocks.dart'; // Import generated mocks
@@ -32,7 +34,7 @@ void main() {
     );
 
     // Verify that the email, name, and password fields exist
-    expect(find.byType(EmailTextField), findsNWidgets(2));
+    expect(find.byType(EmailTextField), findsNWidgets(2)); // Finds the email and name fields
     expect(find.byType(PasswordTextField), findsOneWidget);
 
     // Enter email
