@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:travel_app/controller/RegisterController.dart';
-import 'register_controller_test.mocks.dart';  // Ensure this is generated properly
+import 'register_controller_test.mocks.dart';
 
 // This annotation generates the mock class for http.Client
 @GenerateMocks([http.Client])
@@ -42,9 +42,13 @@ void main() {
       "username": "testuser"
     });
 
-    // Assert that the loading is set to true during the request
-    expect(controller.loading.value, false); // Initially should be false
+    // Assert that the loading is initially false
+    expect(controller.loading.value, false);
+
     final future = controller.registerFunction(data);
+
+    // Assert that the loading is set to true during the request
+    await Future.delayed(Duration(milliseconds: 100)); // Wait for loading to change
     expect(controller.loading.value, true);  // Loading should be true during the request
 
     await future;  // Await the actual call
@@ -77,9 +81,13 @@ void main() {
       "username": "invaliduser"
     });
 
-    // Assert that loading is set to true at the start
-    expect(controller.loading.value, false); // Initially should be false
+    // Assert that loading is set to false initially
+    expect(controller.loading.value, false);
+
     final future = controller.registerFunction(data);
+
+    // Assert that loading is set to true during the request
+    await Future.delayed(Duration(milliseconds: 100));  // Wait for loading to change
     expect(controller.loading.value, true);  // Loading should be true during the request
 
     await future;  // Await the actual call
