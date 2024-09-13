@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:travel_app/controller/RegisterController.dart';
-import 'register_controller_test.mocks.dart';
+import 'register_controller_test.mocks.dart';  // Ensure this is generated properly
 
 // This annotation generates the mock class for http.Client
 @GenerateMocks([http.Client])
@@ -24,6 +24,7 @@ void main() {
   });
 
   test('registerFunction sets loading state correctly and returns success response', () async {
+    // Arrange: Mock the HTTP response to return success.
     final mockResponse = {
       "message": "User created successfully"
     };
@@ -34,18 +35,22 @@ void main() {
       body: anyNamed('body'),
     )).thenAnswer((_) async => http.Response(jsonEncode(mockResponse), 200));
 
+    // Act: Call the function
     String data = jsonEncode({
       "email": "test@example.com",
       "password": "password123",
       "username": "testuser"
     });
 
-    expect(controller.loading.value, false);
+    // Assert that the loading is set to true during the request
+    expect(controller.loading.value, false); // Initially should be false
     final future = controller.registerFunction(data);
-    expect(controller.loading.value, true);  // Loading should be true during request
+    expect(controller.loading.value, true);  // Loading should be true during the request
 
-    await future;
-    expect(controller.loading.value, false);  // Loading should be false after request
+    await future;  // Await the actual call
+
+    // Assert: loading state was set to false at the end
+    expect(controller.loading.value, false);
     verify(mockClient.post(
       Uri.parse('http://10.0.2.2:5000/api/user/create'),
       headers: anyNamed('headers'),
@@ -54,6 +59,7 @@ void main() {
   });
 
   test('registerFunction handles error response correctly', () async {
+    // Arrange: Mock the HTTP response to return an error.
     final mockErrorResponse = {
       "message": "Invalid request"
     };
@@ -64,17 +70,21 @@ void main() {
       body: anyNamed('body'),
     )).thenAnswer((_) async => http.Response(jsonEncode(mockErrorResponse), 400));
 
+    // Act: Call the function
     String data = jsonEncode({
       "email": "invalid@example.com",
       "password": "password123",
       "username": "invaliduser"
     });
 
-    expect(controller.loading.value, false);
+    // Assert that loading is set to true at the start
+    expect(controller.loading.value, false); // Initially should be false
     final future = controller.registerFunction(data);
-    expect(controller.loading.value, true);
+    expect(controller.loading.value, true);  // Loading should be true during the request
 
-    await future;
+    await future;  // Await the actual call
+
+    // Assert: loading state should be false after the error
     expect(controller.loading.value, false);
     verify(mockClient.post(
       Uri.parse('http://10.0.2.2:5000/api/user/create'),
