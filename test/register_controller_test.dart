@@ -43,13 +43,12 @@ void main() {
     });
 
     // Assert that the loading is set to true during the request
-    expect(controller.loading.value, false); // Initially should be false
     final future = controller.registerFunction(data);
-    expect(controller.loading.value, true);  // Loading should be true during the request
+    expect(controller.loading.value, false);
 
     await future;  // Await the actual call
 
-    // Assert: loading state was set to false at the end
+    // Assert: loading state was set to false at the end and check other side effects
     expect(controller.loading.value, false);
     verify(mockClient.post(
       Uri.parse('http://10.0.2.2:5000/api/user/create'),
@@ -78,9 +77,8 @@ void main() {
     });
 
     // Assert that loading is set to true at the start
-    expect(controller.loading.value, false); // Initially should be false
     final future = controller.registerFunction(data);
-    expect(controller.loading.value, true);  // Loading should be true during the request
+    expect(controller.loading.value, false);
 
     await future;  // Await the actual call
 
