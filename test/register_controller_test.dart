@@ -30,7 +30,7 @@ void main() {
     };
 
     when(mockClient.post(
-      any,
+      Uri.parse('http://10.0.2.2:5000/api/user/create'),
       headers: anyNamed('headers'),
       body: anyNamed('body'),
     )).thenAnswer((_) async => http.Response(jsonEncode(mockResponse), 200));
@@ -50,7 +50,11 @@ void main() {
 
     // Assert: loading state was set to false at the end and check other side effects
     expect(controller.loading.value, false);
-    verify(mockClient.post(any, headers: anyNamed('headers'), body: anyNamed('body'))).called(1);
+    verify(mockClient.post(
+      Uri.parse('http://10.0.2.2:5000/api/user/create'),
+      headers: anyNamed('headers'),
+      body: anyNamed('body'),
+    )).called(1);
   });
 
   test('registerFunction handles error response correctly', () async {
@@ -60,7 +64,7 @@ void main() {
     };
 
     when(mockClient.post(
-      any,
+      Uri.parse('http://10.0.2.2:5000/api/user/create'),
       headers: anyNamed('headers'),
       body: anyNamed('body'),
     )).thenAnswer((_) async => http.Response(jsonEncode(mockErrorResponse), 400));
@@ -80,6 +84,10 @@ void main() {
 
     // Assert: loading state should be false after the error
     expect(controller.loading.value, false);
-    verify(mockClient.post(any, headers: anyNamed('headers'), body: anyNamed('body'))).called(1);
+    verify(mockClient.post(
+      Uri.parse('http://10.0.2.2:5000/api/user/create'),
+      headers: anyNamed('headers'),
+      body: anyNamed('body'),
+    )).called(1);
   });
 }
