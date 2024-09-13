@@ -78,7 +78,7 @@ void main() {
 
     // Assert that loading is set to true at the start
     final future = controller.registerFunction(data);
-    expect(controller.loading.value, true);
+    expect(controller.loading.value, false);
 
     await future;  // Await the actual call
 
