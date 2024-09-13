@@ -1,12 +1,10 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:travel_app/common/EmailTextField.dart';
-import 'package:travel_app/common/PasswordTextField.dart';
 import 'package:travel_app/controller/RegisterController.dart';
 import 'package:travel_app/Register/register.dart';
 import 'register_page_test.mocks.dart'; // Import generated mocks
@@ -27,11 +25,19 @@ void main() {
   });
 
   testWidgets('Register Page UI Test', (WidgetTester tester) async {
+    // Initialize ScreenUtil before building the widget
     await tester.pumpWidget(
-      GetMaterialApp(
-        home: RegisterPage(),
+      ScreenUtilInit(
+        designSize: Size(375, 812),
+        builder: () => GetMaterialApp(
+          home: RegisterPage(),
+        ),
       ),
     );
+
+    // Mock HTTP response
+    when(mockClient.post(any, headers: anyNamed('headers'), body: anyNamed('body')))
+        .thenAnswer((_) async => http.Response('{"message": "Registration successful"}', 200));
 
     // Verify that the email, name, and password fields exist
     expect(find.byType(EmailTextField), findsNWidgets(2)); // Finds the email and name fields
