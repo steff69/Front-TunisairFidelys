@@ -29,9 +29,11 @@ void main() {
     await tester.pumpWidget(
       ScreenUtilInit(
         designSize: Size(375, 812),
-        builder: () => GetMaterialApp(
-          home: RegisterPage(),
-        ),
+        builder: (context, child) {
+          return GetMaterialApp(
+            home: RegisterPage(),
+          );
+        },
       ),
     );
 
@@ -39,20 +41,19 @@ void main() {
     when(mockClient.post(any, headers: anyNamed('headers'), body: anyNamed('body')))
         .thenAnswer((_) async => http.Response('{"message": "Registration successful"}', 200));
 
-    // Verify that the email, name, and password fields exist
-    expect(find.byType(EmailTextField), findsNWidgets(2)); // Finds the email and name fields
-    expect(find.byType(PasswordTextField), findsOneWidget);
+    // Verify that the text fields for email, name, and password exist
+    expect(find.byType(TextFormField), findsNWidgets(3)); // Now looking for 3 text fields
 
     // Enter email
-    await tester.enterText(find.byType(EmailTextField).first, 'test@example.com');
+    await tester.enterText(find.byType(TextFormField).first, 'test@example.com');
     await tester.pump();
 
     // Enter name
-    await tester.enterText(find.byType(EmailTextField).at(1), 'TestUser');
+    await tester.enterText(find.byType(TextFormField).at(1), 'TestUser');
     await tester.pump();
 
     // Enter password
-    await tester.enterText(find.byType(PasswordTextField), 'password123');
+    await tester.enterText(find.byType(TextFormField).at(2), 'password123');
     await tester.pump();
 
     // Tap on the "SIGN UP" button
