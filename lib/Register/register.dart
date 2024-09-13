@@ -34,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    var c = Get.put(RegisterController(client: http.Client()));  // Updated initialization
+    var c = Get.put(RegisterController(client: http.Client())); // Injecting http.Client
 
     return Scaffold(
       backgroundColor: kwhite,
@@ -42,12 +42,14 @@ class _RegisterPageState extends State<RegisterPage> {
         elevation: 0,
         backgroundColor: kwhite,
         title: Padding(
-            padding: EdgeInsets.only(left: 100),
-            child: Text(
-              'Sign Up',
-              style: TextStyle(
-                  color: kDark, fontSize: 20, fontWeight: FontWeight.bold),
-            )),
+          padding: EdgeInsets.only(left: 100),
+          child: Text(
+            'Sign Up',
+            style: TextStyle(
+              color: kDark, fontSize: 20, fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
       body: Container(
         width: double.infinity,
@@ -98,9 +100,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         : CustomButton(
                             onTap: () {
                               RegisterModel model = RegisterModel(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                  username: _nameController.text);
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                                username: _nameController.text,
+                              );
                               String data = RegisterModelToJson(model);
                               c.registerFunction(data);
                             },
