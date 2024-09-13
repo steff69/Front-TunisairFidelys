@@ -14,35 +14,40 @@ import 'package:travel_app/constants/constants.dart';
 import 'package:travel_app/login/login.dart';
 
 class RegisterController extends GetxController {
+  //RxList<DatumC> dataList = RxList<DatumC>();
+  final box = GetStorage();
+
   RxBool loading = false.obs;
 
-  Future<void> registerFunction(String data) async {  // Change void to Future<void>
+  void registerFunction(String data) async {
     loading.value = true;
 
     final url = Uri.parse('http://10.0.2.2:5000/api/user/create');
     Map<String, String> headers = {'content-Type': 'application/json'};
 
     try {
-      final response = await http.post(url, headers: headers, body: data);  // Ensure this is awaited
+      final response = await http.post(url, headers: headers, body: data);
 
+      //print(jsonDecode(response.body)['data']);
       if (response.statusCode == 200) {
         String text = jsonDecode(response.body)["message"];
 
-        Get.snackbar('Created successfully', "$text",
+        Get.snackbar('  crated ssucs', "$text",
             backgroundColor: kPrimary,
             colorText: kLightwhite,
             icon: Icon(Ionicons.fast_food_outline));
 
-        Timer(Duration(seconds: 3), () {
+        Timer.periodic(Duration(seconds: 3), (timer) {
           loading.value = false;
         });
 
         Get.offAll(() => LoginPage(),
             transition: Transition.fade, duration: Duration(milliseconds: 900));
-      } else if (response.statusCode == 400) {
+      }
+      if (response.statusCode == 400) {
         String text = jsonDecode(response.body)["message"];
 
-        Get.snackbar('Error', "$text",
+        Get.snackbar('  you have something wrong', "$text",
             messageText: Text(
               "$text",
               style: TextStyle(fontSize: 18, color: kLightwhite),
@@ -51,14 +56,12 @@ class RegisterController extends GetxController {
             backgroundColor: kRed,
             icon: Icon(Ionicons.fast_food_outline));
 
-        Timer(Duration(seconds: 3), () {
+        Timer.periodic(Duration(seconds: 3), (timer) {
           loading.value = false;
         });
       }
     } catch (e) {
       print(e);
-      loading.value = false;
-    }
+    } finally {}
   }
 }
-
