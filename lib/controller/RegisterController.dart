@@ -14,20 +14,20 @@ import 'package:travel_app/constants/constants.dart';
 import 'package:travel_app/login/login.dart';
 
 class RegisterController extends GetxController {
-  final http.Client client;  // Constructor for injecting http.Client
+  final http.Client client;  // Inject the HTTP client
 
   RegisterController({required this.client});
 
   RxBool loading = false.obs;
 
-  void registerFunction(String data) async {
+  Future<void> registerFunction(String data) async {
     loading.value = true;
 
     final url = Uri.parse('http://10.0.2.2:5000/api/user/create');
     Map<String, String> headers = {'content-Type': 'application/json'};
 
     try {
-      final response = await client.post(url, headers: headers, body: data);  // Use injected client
+      final response = await client.post(url, headers: headers, body: data);
 
       if (response.statusCode == 200) {
         String text = jsonDecode(response.body)["message"];
@@ -37,9 +37,8 @@ class RegisterController extends GetxController {
             colorText: kLightwhite,
             icon: Icon(Ionicons.fast_food_outline));
 
-        Timer.periodic(Duration(seconds: 3), (timer) {
-          loading.value = false;
-        });
+        await Future.delayed(Duration(seconds: 3));  // Use await with delay
+        loading.value = false;
 
         Get.offAll(() => LoginPage(),
             transition: Transition.fade, duration: Duration(milliseconds: 900));
@@ -55,13 +54,11 @@ class RegisterController extends GetxController {
             backgroundColor: kRed,
             icon: Icon(Ionicons.fast_food_outline));
 
-        Timer.periodic(Duration(seconds: 3), (timer) {
-          loading.value = false;
-        });
+        await Future.delayed(Duration(seconds: 3));
+        loading.value = false;
       }
     } catch (e) {
       print(e);
-    } finally {
       loading.value = false;
     }
   }
