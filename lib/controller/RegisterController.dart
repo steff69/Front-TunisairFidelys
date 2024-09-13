@@ -22,7 +22,7 @@ class RegisterController extends GetxController {
   RxBool loading = false.obs;
 
   Future<void> registerFunction(String data) async {
-    loading.value = true;
+    loading.value = false;
 
     final url = Uri.parse('http://10.0.2.2:5000/api/user/create');
     Map<String, String> headers = {'content-Type': 'application/json'};
