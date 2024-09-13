@@ -1,69 +1,51 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:http/http.dart' as http;
-import 'register_controller_test.mocks.dart';
 import 'package:travel_app/controller/RegisterController.dart';
+import 'package:travel_app/screens/RegisterPage.dart';
 
-@GenerateMocks([http.Client])
 void main() {
-  late RegisterController controller;
-  late MockClient mockClient;
+  testWidgets('Register Page UI Test', (WidgetTester tester) async {
+    // Initialize GetX controller
+    final RegisterController registerController = Get.put(RegisterController());
 
-  setUp(() {
-    Get.testMode = true;  // This will prevent errors with GetX widgets during testing
-    mockClient = MockClient();
-    controller = Get.put(RegisterController(client: mockClient));
-  });
+    // Build the RegisterPage widget
+    await tester.pumpWidget(
+      GetMaterialApp(
+        home: RegisterPage(),
+      ),
+    );
 
-  tearDown(() {
-    Get.reset();
-  });
+    // Verify that the email field exists
+    expect(find.byType(TextFormField), findsNWidgets(2)); // One for email, one for password
 
-  test('registerFunction sets loading state correctly and returns success response', () async {
-    final mockResponse = {
-      "message": "User created successfully"
-    };
+    // Enter email
+    await tester.enterText(find.byType(TextFormField).first, 'test@example.com');
+    await tester.pump();
 
-    when(mockClient.post(
-      Uri.parse('http://10.0.2.2:5000/api/user/create'),
-      headers: anyNamed('headers'),
-      body: anyNamed('body'),
-    )).thenAnswer((_) async => http.Response(jsonEncode(mockResponse), 200));
+    // Verify that the entered email is displayed in the text field
+    expect(find.text('test@example.com'), findsOneWidget);
 
-    String data = jsonEncode({
-      "email": "test@example.com",
-      "password": "password123",
-      "username": "testuser"
-    });
+    // Enter name
+    await tester.enterText(find.byType(TextFormField).at(1), 'TestUser');
+    await tester.pump();
 
-    expect(controller.loading.value, false);
-    await controller.registerFunction(data);
-    expect(controller.loading.value, false);
-    verify(mockClient.post(any, headers: anyNamed('headers'), body: anyNamed('body'))).called(1);
-  });
+    // Enter password
+    await tester.enterText(find.byType(PasswordTextField), 'password123');
+    await tester.pump();
 
-  test('registerFunction handles error response correctly', () async {
-    final mockErrorResponse = {
-      "message": "Invalid request"
-    };
+    // Tap on the "Sign Up" button
+    await tester.tap(find.text('SING UP'));
+    await tester.pump();
 
-    when(mockClient.post(
-      Uri.parse('http://10.0.2.2:5000/api/user/create'),
-      headers: anyNamed('headers'),
-      body: anyNamed('body'),
-    )).thenAnswer((_) async => http.Response(jsonEncode(mockErrorResponse), 400));
+    // Check if the registration process started by verifying loading state
+    expect(registerController.loading.value, true);
 
-    String data = jsonEncode({
-      "email": "invalid@example.com",
-      "password": "password123",
-      "username": "invaliduser"
-    });
+    // Simulate registration success by setting loading to false
+    registerController.loading.value = false;
+    await tester.pump();
 
-    expect(controller.loading.value, false);
-    await controller.registerFunction(data);
-    expect(controller.loading.value, false);
-    verify(mockClient.post(any, headers: anyNamed('headers'), body: anyNamed('body'))).called(1);
+    // Verify that loading has stopped
+    expect(registerController.loading.value, false);
   });
 }

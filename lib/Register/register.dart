@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 import 'package:travel_app/Models%202/LoginModel.dart';
 import 'package:travel_app/Models%202/RegisterModel.dart';
 import 'package:travel_app/common/EmailTextField.dart';
@@ -10,6 +11,7 @@ import 'package:travel_app/common/PasswordTextField.dart';
 import 'package:travel_app/common/back_ground_container.dart';
 import 'package:travel_app/common/shimmers/cutomButtomn.dart';
 import 'package:travel_app/constants/constants.dart';
+import 'package:travel_app/controller/LoginController.dart';
 import 'package:travel_app/controller/RegisterController.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -22,23 +24,24 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   late final TextEditingController _emailController = TextEditingController();
   late final TextEditingController _nameController = TextEditingController();
-  late final TextEditingController _passwordController = TextEditingController();
+
+  late final TextEditingController _passwordController =
+      TextEditingController();
   final FocusNode _passwordCFocusNode = FocusNode();
 
-  // Dispose controllers and focus nodes
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
     _passwordCFocusNode.dispose();
     _nameController.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Inject http.Client into the RegisterController
-    var c = Get.put(RegisterController(client: http.Client()));
+    var c = Get.put(RegisterController());
 
     return Scaffold(
       backgroundColor: kwhite,
@@ -116,7 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               String data = RegisterModelToJson(model);
                               c.registerFunction(data);
                             },
-                            text: "SIGN UP",
+                            text: "SING UP",
                             btnheigh: 35.h,
                           )),
                   ],
