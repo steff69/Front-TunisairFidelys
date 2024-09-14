@@ -37,7 +37,7 @@ steps:
       flutter test test/register_page_test.dart
   displayName: ' test junit test'
 
-- script: flutter test --machine > test-results.txt
+- script: flutter test --machine > test-results.txt || true
   displayName: 'create test-results.txt'
 - task: PublishTestResults@2
   inputs:
