@@ -23,24 +23,22 @@ steps:
     projectDirectory: './'  # Ensure this points to your project
     flutterDirectory: '/home/azureuser/myagent/sdk/flutter/bin'
     
-- script: 
-    pwd
     
 - script: |
       flutter test test/widget_test.dart
-  displayName: 'test integration and '
+  displayName: 'Integration Test '
 
 - script: |
       flutter pub get
       flutter pub run build_runner build
       flutter test test/register_controller_test.dart
       flutter test test/register_page_test.dart
-  displayName: ' test junit test'
+  displayName: ' JUnit Test'
 
 - script: flutter test --machine > test-results.txt || true
-  displayName: 'create /test/test-results.txt'
+  displayName: 'create test-results.txt'
 - task: PublishTestResults@2
   inputs:
   
-      testResultsFiles: '/test/test-results.txt'
+      testResultsFiles: './test-results.txt'
       testResultsFormat: 'JUnit'
