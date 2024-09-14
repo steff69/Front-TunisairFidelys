@@ -22,6 +22,13 @@ void main() {
     // Initialize GetX controller with mockClient
     final RegisterController registerController = Get.put(RegisterController(client: mockClient));
 
+    // Mock HTTP response for the specific post request
+    when(mockClient.post(
+      Uri.parse('http://10.0.2.2:5000/api/user/create'),
+      headers: anyNamed('headers'),
+      body: '{"email":"test@example.com","password":"password123","username":"TestUser"}',
+    )).thenAnswer((_) async => http.Response('{"message": "Registration successful"}', 200));
+
     // Initialize ScreenUtil before building the widget
     await tester.pumpWidget(
       ScreenUtilInit(
@@ -52,6 +59,9 @@ void main() {
     // Tap on the "SIGN UP" button
     await tester.tap(find.text('SIGN UP'));
     await tester.pump();
+
+    // Wait for any network requests to be processed
+    await tester.pumpAndSettle();
 
     // Check if the registration process started by verifying loading state
     expect(registerController.loading.value, true);
