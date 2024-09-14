@@ -35,10 +35,10 @@ steps:
       flutter test test/register_page_test.dart
   displayName: ' JUnit Test'
 
-- script: flutter test --machine > test-results.txt || true
+- script: flutter test --machine > /test/test-results.xml || true
   displayName: 'create test-results.txt'
 - task: PublishTestResults@2
   inputs:
   
-      testResultsFiles: './test-results.txt'
+      testResultsFiles: './test/test-results.xml'
       testResultsFormat: 'JUnit'
