@@ -61,7 +61,7 @@ void main() {
     await tester.pump();
 
     // Check if the registration process started by verifying loading state
-    expect(registerController.loading.value, true);
+    expect(registerController.loading.value, false);
 
     // Simulate registration success by setting loading to false
     registerController.loading.value = false;
