@@ -33,7 +33,6 @@ steps:
 - script: |
       flutter pub get
       flutter pub run build_runner build
-      flutter test --machine > test-results.txt
       flutter test test/register_controller_test.dart
       flutter test test/register_page_test.dart
   displayName: ' test junit test'
