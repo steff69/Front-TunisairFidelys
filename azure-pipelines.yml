@@ -33,11 +33,15 @@ steps:
 - script: |
       flutter pub get
       flutter pub run build_runner build
+      flutter test --machine > test-results.txt
       flutter test test/register_controller_test.dart
       flutter test test/register_page_test.dart
   displayName: ' test junit test'
 
+- script: flutter test --machine > test-results.txt
+  displayName: 'create test-results.txt'
 - task: PublishTestResults@2
   inputs:
-      testResultsFiles: '/test/test-results.xml'
+  
+      testResultsFiles: '/test/test-results.txt'
       testResultsFormat: 'JUnit'
