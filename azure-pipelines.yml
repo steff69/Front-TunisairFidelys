@@ -25,7 +25,7 @@ steps:
     
     
 - script: |
-      flutter test test/widget_test.dart
+      flutter test widget_test.dart
   displayName: 'Integration Test '
 
 - script: |
@@ -34,11 +34,12 @@ steps:
       flutter test test/register_controller_test.dart
       flutter test test/register_page_test.dart
   displayName: ' JUnit Test'
+- script: |
+    flutter test --machine > test-results.json
+    cat test-results.json | tojunit > test-results.xml || true
+  displayName: 'Create JUnit Test Results'
 
-- script: flutter test --machine > /test/test-results.xml || true
-  displayName: 'create test-results.txt'
 - task: PublishTestResults@2
   inputs:
-  
-      testResultsFiles: './test/test-results.xml'
-      testResultsFormat: 'JUnit'
+    testResultsFiles: './test-results.xml'
+    testResultsFormat: 'JUnit'
