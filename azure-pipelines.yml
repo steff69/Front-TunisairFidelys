@@ -38,7 +38,7 @@ steps:
   displayName: ' test junit test'
 
 - script: flutter test --machine > test-results.txt || true
-  displayName: 'create test-results.txt'
+  displayName: 'create /test/test-results.txt'
 - task: PublishTestResults@2
   inputs:
   
