@@ -2,13 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:travel_app/controller/RegisterController.dart';
 import 'package:travel_app/Register/register.dart';
+import 'register_page_test.mocks.dart'; // Import generated mocks
 
+@GenerateMocks([http.Client])
 void main() {
+  late MockClient mockClient;
+
+  setUp(() {
+    Get.testMode = true;
+    mockClient = MockClient(); // Mock http.Client
+  });
+
   testWidgets('Register Page UI Test', (WidgetTester tester) async {
-    // Initialize GetX controller
-    final RegisterController registerController = Get.put(RegisterController());
+    // Initialize GetX controller with mockClient
+    final RegisterController registerController = Get.put(RegisterController(client: mockClient));
 
     // Initialize ScreenUtil before building the widget
     await tester.pumpWidget(
@@ -23,7 +35,7 @@ void main() {
     );
 
     // Verify that the text fields for email, name, and password exist
-    expect(find.byType(TextFormField), findsNWidgets(3)); // Now looking for 3 text fields
+    expect(find.byType(TextFormField), findsNWidgets(3));
 
     // Enter email
     await tester.enterText(find.byType(TextFormField).first, 'test@example.com');
