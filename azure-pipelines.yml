@@ -25,7 +25,7 @@ steps:
     
     
 - script: |
-      flutter test /test/widget_test.dart
+      flutter test test/widget_test.dart
   displayName: 'Integration Test '
 
 - script: |
