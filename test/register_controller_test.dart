@@ -11,7 +11,7 @@ import 'register_controller_test.mocks.dart'; // Import generated mocks
 
 @GenerateMocks([http.Client])
 void main() {
-  Get.testMode = true
+  Get.testMode = true;
   late RegisterController registerController;
   late MockClient mockClient;
 
