@@ -43,3 +43,11 @@ steps:
   inputs:
     testResultsFiles: './test-results.xml'
     testResultsFormat: 'JUnit'
+  
+- script: |
+      sonar-scanner \
+      -Dsonar.projectKey=flutter-mobile-app \
+      -Dsonar.sources=. \
+      -Dsonar.host.url=http://51.120.245.174:9000 \
+      -Dsonar.login=sqp_a47a048261e0a555394172c3300a49986f2cf3f8
+  displayName: 'Run SonarQube Analysis'
