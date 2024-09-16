@@ -51,3 +51,8 @@ steps:
       -Dsonar.host.url=http://51.120.245.174:9000 \
       -Dsonar.login=sqp_a47a048261e0a555394172c3300a49986f2cf3f8
   displayName: 'Run SonarQube Analysis'
+
+
+- task: SonarQubePublish@6
+  inputs:
+    pollingTimeoutSec: '300'
