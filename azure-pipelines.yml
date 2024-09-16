@@ -43,7 +43,14 @@ steps:
   inputs:
     testResultsFiles: './test-results.xml'
     testResultsFormat: 'JUnit'
-  
+- task: SonarQubePrepare@6
+  inputs:
+    SonarQube: 'SonarQubeServiceConnection'  # Use the name of the SonarQube service connection you created
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'TunisairSonar'
+    cliSources: '.'
+
 - script: |
       sonar-scanner \
       -Dsonar.projectKey=TunisairSonar \
