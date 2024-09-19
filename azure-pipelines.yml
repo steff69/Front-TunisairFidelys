@@ -72,3 +72,8 @@ steps:
         format: 'HTML'
         uploadReports: true
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'FidelysArtifact'
+    publishLocation: 'Container'
