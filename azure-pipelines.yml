@@ -64,11 +64,11 @@ steps:
   inputs:
     pollingTimeoutSec: '300'
 
-- task: dependency-check-build-task@6
+- task: Bash@3
   inputs:
-    projectName: 'Front-TunisairFidelys'
-    scanPath: './'
-    format: 'HTML'
-    uploadReports: true
-  env:
-    NVD_API_KEY: '0061b88f-21a7-495c-87e8-2a242321088c' 
+    targetType: 'inline'
+    script: |
+      rm -rf ~/.dependency-check
+      export NVD_API_KEY='0061b88f-21a7-495c-87e8-2a242321088c'
+      /home/azureuser/dependency-check/dependency-check/bin/dependency-check.sh --project "Front-TunisairFidelys" --scan '/home/azureuser/myagent/_work/1/s' --format 'HTML' --out '/home/azureuser/myagent/_work/1/TestResults/dependency-check' --disableCentral --propertyfile ~/.dependency-check/configuration.properties
+  displayName: 'Dependency check'
