@@ -70,3 +70,5 @@ steps:
     scanPath: './'
     format: 'HTML'
     uploadReports: true
+  env:
+    NVD_API_KEY: '0061b88f-21a7-495c-87e8-2a242321088c' 
