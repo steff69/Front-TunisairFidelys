@@ -69,6 +69,6 @@ steps:
     targetType: 'inline'
     script: |
       export NVD_API_KEY='0061b88f-21a7-495c-87e8-2a242321088c'
-      /home/azureuser/dependency-check/dependency-check/bin/dependency-check.sh --project "Front-TunisairFidelys" --scan '.' --format 'HTML' --out '/home/azureuser/myagent/_work/1/TestResults/dependency-check' --disableCentral
+      /home/azureuser/dependency-check/bin/dependency-check.sh --project "Front-TunisairFidelys" --scan '/home/azureuser/myagent/_work/1/s' --format 'HTML' --out '/home/azureuser/myagent/_work/1/TestResults/dependency-check' --disableCentral --nvd-apiKey 0061b88f-21a7-495c-87e8-2a242321088c
 
 
