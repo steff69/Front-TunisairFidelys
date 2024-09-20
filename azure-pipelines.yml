@@ -9,7 +9,8 @@ pool:
 steps:
 - script: 
     pwd
-    
+
+# Run Flutter Commands
 - script: |
     flutter --version
     flutter pub outdated
@@ -17,23 +18,18 @@ steps:
     flutter pub get
   displayName: 'Run Flutter Commands'
 
-- task: FlutterBuild@0
-  inputs:
-    target: 'apk'
-    projectDirectory: './'  # Ensure this points to your project
-    flutterDirectory: '/home/azureuser/myagent/sdk/flutter/bin'
-    
-    
+# Run Tests First
 - script: |
-      flutter test test/widget_test.dart
-  displayName: 'Integration Test '
+    flutter pub get
+    flutter pub run build_runner build
+    flutter test test/widget_test.dart
+  displayName: 'Integration Test'
 
 - script: |
-      flutter pub get
-      flutter pub run build_runner build
-      flutter test test/register_controller_test.dart
-      flutter test test/register_page_test.dart
-  displayName: ' JUnit Test'
+    flutter test test/register_controller_test.dart
+    flutter test test/register_page_test.dart
+  displayName: 'JUnit Test'
+
 - script: |
     flutter test --machine > test-results.json
     cat test-results.json | tojunit > test-results.xml || true
@@ -43,6 +39,16 @@ steps:
   inputs:
     testResultsFiles: './test-results.xml'
     testResultsFormat: 'JUnit'
+
+# Build APK after tests pass
+- task: FlutterBuild@0
+  inputs:
+    target: 'apk'
+    projectDirectory: './'  # Ensure this points to your project
+    flutterDirectory: '/home/azureuser/myagent/sdk/flutter/bin'
+  displayName: 'Build Flutter APK'
+
+# SonarQube Analysis
 - task: SonarQubePrepare@6
   inputs:
     SonarQube: 'SonarQubeServiceConnection'  # Use the name of the SonarQube service connection you created
@@ -52,18 +58,18 @@ steps:
     cliSources: '.'
 
 - script: |
-      sonar-scanner \
-      -Dsonar.projectKey=TunisairSonar \
-      -Dsonar.sources=. \
-      -Dsonar.host.url=http://51.120.245.174:9000 \
-      -Dsonar.login=sqp_a47a048261e0a555394172c3300a49986f2cf3f8
+    sonar-scanner \
+    -Dsonar.projectKey=TunisairSonar \
+    -Dsonar.sources=. \
+    -Dsonar.host.url=http://51.120.245.174:9000 \
+    -Dsonar.login=sqp_a47a048261e0a555394172c3300a49986f2cf3f8
   displayName: 'Run SonarQube Analysis'
-
 
 - task: SonarQubePublish@6
   inputs:
     pollingTimeoutSec: '300'
 
+# Dependency Check
 - task: Bash@3
   inputs:
     targetType: 'inline'
@@ -71,4 +77,4 @@ steps:
       rm -rf ~/.dependency-check
       export NVD_API_KEY='0061b88f-21a7-495c-87e8-2a242321088c'
       /home/azureuser/dependency-check/dependency-check/bin/dependency-check.sh --project "Front-TunisairFidelys" --scan '/home/azureuser/myagent/_work/1/s' --format 'HTML' --out '/home/azureuser/myagent/_work/1/TestResults/dependency-check' --data /home/azureuser/dependency-check/data --propertyfile /home/azureuser/dependency-check/dependency-check/bin/configuration.properties
-  displayName: 'Dependency check'
+  displayName: 'Dependency Check'
