@@ -1,5 +1,5 @@
 # Use an official lightweight Alpine Linux image as the base
-FROM alpine:latest
+FROM alpine:3.14
 
 # Set the working directory inside the container
 WORKDIR /app
