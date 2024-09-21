@@ -83,3 +83,10 @@ steps:
     artifactName: 'DependencyCheckReport'
     publishLocation: 'Container'
   displayName: 'Publish Dependency Check Report'
+  
+- task: Docker@2
+  inputs:
+    containerRegistry: 'docker'
+    repository: 'mustapha69/front-tunisairfidelys'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
