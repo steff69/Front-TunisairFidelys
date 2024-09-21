@@ -89,4 +89,4 @@ steps:
     containerRegistry: 'docker'
     repository: 'mustapha69/front-tunisairfidelys'
     command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
+    Dockerfile: 'Docker/Dockerfile'
