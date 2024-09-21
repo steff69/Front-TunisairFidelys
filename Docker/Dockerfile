@@ -5,7 +5,7 @@ FROM alpine:3.14
 WORKDIR /app
 
 # Copy the APK from your local build output into the Docker container
-COPY ../build/app/outputs/flutter-apk/app-release.apk /app/app-release.apk
+COPY build/app/outputs/flutter-apk/app-release.apk /app/app-release.apk
 
 # Expose port 8080 to access the APK from outside the container
 EXPOSE 8080
