@@ -90,3 +90,4 @@ steps:
     repository: 'mustapha69/front-tunisairfidelys'
     command: 'buildAndPush'
     Dockerfile: 'Docker/Dockerfile'
+    buildContext: '/home/azureuser/myagent/_work/1/s' 
